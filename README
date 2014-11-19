@@ -1,0 +1,13 @@
+QLALib is a group of classes and functions designed for use in quantum mechanics applications. The library interfaces with the C++ Boost libraries and the GNU Scientific Libraries (GSL). Basic installation is as follows:
+In the base directory,
+
+1) glibtoolize
+2) aclocal
+3) autoheader
+4) automake -a
+5) autoconf
+6) ./configure
+7) make
+8) make install
+
+To link to QLALib, invoke the -lQLA flag at linking time
