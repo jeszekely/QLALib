@@ -6,13 +6,6 @@
 #ifndef QLALIB_VECTOR
 #define QLALIB_VECTOR
 
-#include <memory>
-#include <algorithm>
-#include <iostream>
-#include <iomanip>
-#include <assert.h>
-#include <random>
-
 #include "matrix.hpp"
 #include "utilities.hpp"
 

@@ -6,8 +6,7 @@
 
 #ifndef QLALIB_DAVIDSON
 #define QLALIB_DAVIDSON
- 
-#include "matrix.hpp"
+
 #include "vector.hpp"
 
 //generalized matrix class designed to be used as input to the davidson algorithm
