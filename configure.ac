@@ -8,7 +8,7 @@ AC_CONFIG_SRCDIR([src/matrix.cpp])
 AC_CONFIG_HEADERS([QLALib_config.h])
 
 AC_LANG([C])
-AC_PREFIX_DEFAULT(["/usr/local/QLALib"])
+# AC_PREFIX_DEFAULT(["/usr/local/QLALib"])
 
 m4_include([m4/acx_mpi.m4])
 
@@ -20,7 +20,7 @@ AC_CHECK_LIB([gsl],[gsl_sf_coupling_3j])
 
 AX_CXX_COMPILE_STDCXX_11([noext])
 
-LT_INIT([disable-static])
+LT_INIT()
 
 AC_CONFIG_MACRO_DIR([m4])
 
