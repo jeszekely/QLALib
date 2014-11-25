@@ -36,6 +36,8 @@ extern "C"
                const std::complex<double>* alpha, const std::complex<double>* a, const int* lda, const std::complex<double>* b, const int* ldb,
                const std::complex<double>* beta, std::complex<double>* c, const int* ldc);
 
+  void zhemm_(const char* side, const char* uplo, const int *m, const int *n, const std::complex<double> *alpha, const std::complex<double> *a, const int *lda, const std::complex<double> *b, const int *ldb, const std::complex<double> *beta, std::complex<double> *c, const int *ldc);
+
   void zgemv_(const char*, const int*, const int*, const std::complex<double>*, const std::complex<double>*, const int*, const std::complex<double>*, const int*,
              const std::complex<double>*, std::complex<double>*, const int*);
   int izamax_(const int*, const std::complex<double>*, const int*);
@@ -123,6 +125,9 @@ namespace
                  const std::complex<double> alpha, const std::unique_ptr<std::complex<double>[]>& a, const int lda, const std::unique_ptr<std::complex<double>[]>& b, const int ldb,
                  const std::complex<double> beta, std::unique_ptr<std::complex<double>[]>& c, const int ldc)
                  { ::zgemm3m_(transa,transb,&m,&n,&k,&alpha,a.get(),&lda,b.get(),&ldb,&beta,c.get(),&ldc); }
+
+  void zhemm_(const char* side, const char* uplo, const int m, const int n, const std::complex<double> alpha, const std::complex<double> *a, const int lda, const std::complex<double> *b, const int ldb, const std::complex<double> beta, std::complex<double> *c, const int ldc)
+                { ::zhemm_(side, uplo, &m, &n, &alpha, a, &lda, b, &ldb, &beta, c, &ldc); };
 
   void zgemv_(const char* a, const int b, const int c, const std::complex<double> d, const std::complex<double>* e, const int f, const std::complex<double>* g, const int h,
              const std::complex<double> i, std::complex<double>* j, const int k) { ::zgemv_(a,&b,&c,&d,e,&f,g,&h,&i,j,&k); }
