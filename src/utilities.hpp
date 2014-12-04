@@ -28,6 +28,12 @@ extern "C"
 
   double ddot_(const int*, const double*, const int*, const double*, const int*);
 
+#ifndef ZDOT_RETURN
+ void zdotc_(std::complex<double>*, const int*, const std::complex<double>*, const int*, const std::complex<double>*, const int*);
+#else
+ std::complex<double> zdotc_(const int*, const std::complex<double>*, const int*, const std::complex<double>*, const int*);
+#endif
+
   void daxpy_(const int*, const double*, const double*, const int*, double*, const int*);
 
   void zaxpy_(const int*, const std::complex<double>*, const std::complex<double>*, const int*, const std::complex<double>*, const int*);
@@ -50,6 +56,12 @@ extern "C"
 
  void mkl_dcsrgemv_(const char*, const int *, const double *, const int *, const int *, const double *, const double *);
 
+ void dgetrf_(const int*, const int *, double* , int* , int* , int*); // LU decomoposition of a general matrix
+
+ void dgetri_(const int*, double*, int*, int*, double*, int*, int*); // generate inverse of a matrix given its LU decomposition
+
+ void dgesv_(const int* n, const int* nrhs, double* a, const int* lda, int* ipiv, double* b, const int* ldb, int* info);
+
 }
 
 //LAPACK
@@ -63,6 +75,11 @@ extern "C"
 //AlignmentTool interface
 namespace
 {
+  void dgesv_(const int n, const int nrhs, double* a, const int lda, int* ipiv, double* b, const int ldb, int& info)
+             { ::dgesv_(&n, &nrhs, a, &lda, ipiv, b, &ldb, &info); }
+  void dgesv_(const int n, const int nrhs, std::unique_ptr<double[]>& a, const int lda, std::unique_ptr<int[]>& ipiv,
+             std::unique_ptr<double[]>& b, const int ldb, int& info) { ::dgesv_(&n, &nrhs, a.get(), &lda, ipiv.get(), b.get(), &ldb, &info); }
+
   void dgemm_(const char* transa, const char* transb, const int m, const int n, const int k,
               const double alpha, const double* a, const int lda, const double* b, const int ldb,
               const double beta, double* c, const int ldc)
@@ -108,6 +125,23 @@ namespace
   double ddot_(const int a, const std::unique_ptr<double []>& b, const int c, const std::unique_ptr<double []>& d, const int e)
              { return ::ddot_(&a,b.get(),&c,d.get(),&e); }
 
+#ifndef ZDOT_RETURN
+ std::complex<double> zdotc_(const int b, const std::complex<double>* c, const int d, const std::complex<double>* e, const int f) {
+   std::complex<double> a;
+   ::zdotc_(&a,&b,c,&d,e,&f);
+   return a;
+ }
+ std::complex<double> zdotc_(const int b, const std::unique_ptr<std::complex<double> []>& c, const int d, const std::unique_ptr<std::complex<double> []>& e, const int f) {
+   std::complex<double> a;
+   ::zdotc_(&a,&b,c.get(),&d,e.get(),&f);
+   return a;
+ }
+#else
+ std::complex<double> zdotc_(const int a, const std::complex<double>* b, const int c, const std::complex<double>* d, const int e) { return ::zdotc_(&a,b,&c,d,&e); }
+ std::complex<double> zdotc_(const int a, const std::unique_ptr<std::complex<double> []>& b, const int c, const std::unique_ptr<std::complex<double> []>& d, const int e)
+                             { return ::zdotc_(&a,b.get(),&c,d.get(),&e); }
+#endif
+
   void dsyevr_(const char* jobz, const char* range, const char* uplo, const int n, double* a, const int lda, double vl,
                  double vu, const int il, const int iu, const double abstol, int m, double* w, double* z, const int ldz,
                 int* isuppz, double* work, int lwork, int* iwork, int liwork, int& info)
@@ -149,20 +183,18 @@ namespace
              std::unique_ptr<double []>& f, std::unique_ptr<std::complex<double> []>& g, const int h, std::unique_ptr<double[]>& i, int& j)
              { ::zheev_(a,b,&c,d.get(),&e,f.get(),g.get(),&h,i.get(),&j); }
 
-// Sparse routines
- // void mkl_dcsrsymv_(const char* uplo, const int m, const double* a, const int* ia, const int* ja, double* x, double* y)
- //                {mkl_dcsrsymv_(uplo, m, a, ia, ja, x, y); };
-
- // void mkl_dscrgemv_(const char* transa, const int m, const double* a, const int* ia, const int* ja, double* x, double* y)
- //                {mkl_dscrgemv_(transa, m, a, ia, ja, x, y); };
-
  void mkl_ddnscsr_(const int* job, const int nr, const int nc, const double *data, const int nz, const double *csrdata, const int *cCdata, const int *cRdata, int info)
             { ::mkl_ddnscsr_(job, &nr, &nc, data, &nz, csrdata, cCdata, cRdata, &info); };
 
  void mkl_dcsrgemv_(const char* transa, const int nr, const double *data, const int *csrRow, const int *csrCol, const double *o, const double *out)
             { ::mkl_dcsrgemv_(transa,&nr,data,csrRow,csrCol,o,out);}
- // void mkl_dcrscoo()
- // {};
+
+  void dgetrf_(const int a, const int b, double *c, int d, int *e, int f)
+            {::dgetrf_(&a, &b, c, &d, e, &f);}
+
+  void dgetri_(const int a, double *b, int c, int* d, double *e, int f, int g) // generate inverse of a matrix given its LU decomposition
+            {::dgetri_(&a, b, &c, d, e, &f, &g);}
+
 
 }
 
