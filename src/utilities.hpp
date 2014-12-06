@@ -50,6 +50,10 @@ extern "C"
 
   int izamin_(const int*, const std::complex<double>*, const int*);
 
+  int idamax_(const int*, const double *, const int*);
+
+  int idamin_(const int*, const double *, const int*);
+
  void mkl_ddnscsr_(const int*, const int*, const int*, const double *, const int*, const double *, const int *, const int *, int *);
 
  void mkl_domatcopy_(const char*, const char*, const int *, const int *, const double *, const double* , const int *, double* , const int *);
@@ -175,6 +179,12 @@ namespace
 
   int izamin_(const int n, const std::complex<double> *x, const int inc)
               { return ::izamin_(&n,x,&inc);}
+
+  int idamax_(const int n, const double *x, const int inc)
+              { return ::idamax_(&n,x,&inc);}
+
+  int idamin_(const int n, const double *x, const int inc)
+              { return ::idamin_(&n,x,&inc);}
 
   void zheev_(const char* a, const char* b, const int c, std::complex<double>* d, const int e, double* f, std::complex<double>* g, const int h, double* i, int& j)
              { ::zheev_(a,b,&c,d,&e,f,g,&h,i,&j); }
