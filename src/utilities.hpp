@@ -66,6 +66,10 @@ extern "C"
 
  void dgesv_(const int* n, const int* nrhs, double* a, const int* lda, int* ipiv, double* b, const int* ldb, int* info);
 
+ void dswap_(const int* n, double* x, const int* incx, double* y, const int* incy);
+
+ void zswap_(const int* n, std::complex<double>* x, const int* incx, std::complex<double>* y, const int* incy);
+
 }
 
 //LAPACK
@@ -204,6 +208,12 @@ namespace
 
   void dgetri_(const int a, double *b, int c, int* d, double *e, int f, int g) // generate inverse of a matrix given its LU decomposition
             {::dgetri_(&a, b, &c, d, e, &f, &g);}
+
+  void dswap_(const int n, double* x, const int incx, double* y, const int incy)
+            {::dswap_(&n,x,&incx,y,&incy);}
+
+  void zswap_(const int n, std::complex<double>* x, const int incx, std::complex<double>* y, const int incy)
+            {::zswap_(&n,x,&incx,y,&incy);}
 
 
 }
