@@ -73,13 +73,13 @@ public:
   size_t nc() const {return ncols;} ///< Return number of columns
 
   /// Fill matrix with randomly generated numbers
- // void random()
- // {
-  //  std::random_device rd;
-  //  std::mt19937 gen(rd());
-  //  std::uniform_real_distribution<T> dis(-2, 2);
-  //  std::generate_n(vals.get(), nrows*ncols, [&dis, &gen](){return dis(gen);});
- // }
+ void random()
+ {
+   std::random_device rd;
+   std::mt19937 gen(rd());
+   std::uniform_real_distribution<double> dis(0, 1);
+   std::generate_n(vals.get(), nrows*ncols, [&dis, &gen](){return T(dis(gen));});
+ }
 
   /// Get or set array element at (row,col) position
   T& element(const int row, const int col)
