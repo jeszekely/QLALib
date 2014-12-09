@@ -297,6 +297,10 @@ public:
   matrixComp& operator*=(const cplx&);
   matrixComp& operator/=(const cplx&);
 
+  std::shared_ptr<matrixComp> getSub(int ii, int jj, int kk, int ll) const
+  {
+    return getSub_impl<matrixComp>(ii,jj,kk,ll);
+  }
 };
 
 #endif
