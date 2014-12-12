@@ -259,6 +259,20 @@ void matrixReal::ax_plus_y(const double a, matrixReal &o)
   daxpy_(size(), a, data(), 1, o.data(), 1);
 }
 
+void matrixReal::invert()
+{
+  assert (nrows == ncols);
+  vector<int> ipiv(nrows+1);
+  int lwork = nrows*nrows;
+
+  vector<double>work(lwork);
+  int info;
+
+  dgetrf_(nrows,nrows,data(),nrows,ipiv.data(),info);
+  dgetri_(nrows,data(),nrows,ipiv.data(),work.data(),lwork,info);
+
+}
+
 
 /*************************************
 Complex Matrix Class

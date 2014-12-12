@@ -241,6 +241,7 @@ public:
   }
 
   void ax_plus_y(const double a, matrixReal &o); ///< \f$ cA+B \f$
+  void invert();
 
 ///@}
 };
