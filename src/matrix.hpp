@@ -304,4 +304,7 @@ public:
   }
 };
 
+void printMatrix(matrixComp &o, std::string filename, double *x = nullptr, double *y = nullptr);
+void printMatrix(matrixReal &o, std:string filename, double *x = nullptr, double *y = nullptr);
+
 #endif

@@ -372,3 +372,51 @@ void matrixComp::getEigvals(double* eigVals)
     throw std::runtime_error("Unable to diagonalize matrix");
   return;
 }
+
+void printMatrix(matrixComp &o, string filename, double *x, double* y)
+{
+  ofstream outFile(filename);
+  if (x != nullptr && y != nullptr)
+  {
+    for (int ii = 0; ii < o.nr(), ii++)
+    {
+      for (int jj = 0; jj < o.nc(), jj++)
+        outFile << x[ii] << " " << y[jj] << " " << real(o(ii,jj)) << " " << imag(o(ii,jj)) << "\n";
+      cout << "\n";
+    }
+  }
+  else
+  {
+    for (int ii = 0; ii < o.nr(), ii++)
+    {
+      for (int jj = 0; jj < o.nc(), jj++)
+        outFile << ii << " " << jj << " " << real(o(ii,jj)) << " " << imag(o(ii,jj)) << "\n";
+      cout << "\n";
+    }
+  }
+  outFile.close();
+}
+
+void printMatrix(matrixReal &o, string filename, double *x, double* y)
+{
+  ofstream outFile(filename);
+  if (x != nullptr && y != nullptr)
+  {
+    for (int ii = 0; ii < o.nr(), ii++)
+    {
+      for (int jj = 0; jj < o.nc(), jj++)
+        outFile << x[ii] << " " << y[jj] << " " << o(ii,jj) << "\n";
+      cout << "\n";
+    }
+  }
+  else
+  {
+    for (int ii = 0; ii < o.nr(), ii++)
+    {
+      for (int jj = 0; jj < o.nc(), jj++)
+        outFile << ii << " " << jj << " " << o(ii,jj) << "\n";
+      cout << "\n";
+    }
+  }
+  outFile.close();
+}
