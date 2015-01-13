@@ -384,7 +384,7 @@ void printMatrix(matrixComp &o, string filename, double *x, double* y)
     {
       for (int jj = 0; jj < o.nc(); jj++)
         outFile << x[ii] << " " << y[jj] << " " << real(o(ii,jj)) << " " << imag(o(ii,jj)) << "\n";
-      cout << "\n";
+      outFile << "\n";
     }
   }
   else
@@ -393,7 +393,7 @@ void printMatrix(matrixComp &o, string filename, double *x, double* y)
     {
       for (int jj = 0; jj < o.nc(); jj++)
         outFile << ii << " " << jj << " " << real(o(ii,jj)) << " " << imag(o(ii,jj)) << "\n";
-      cout << "\n";
+      outFile << "\n";
     }
   }
   outFile.close();
@@ -409,7 +409,7 @@ void printMatrix(matrixReal &o, string filename, double *x, double* y)
     {
       for (int jj = 0; jj < o.nc(); jj++)
         outFile << x[ii] << " " << y[jj] << " " << o(ii,jj) << "\n";
-      cout << "\n";
+      outFile << "\n";
     }
   }
   else
@@ -418,7 +418,7 @@ void printMatrix(matrixReal &o, string filename, double *x, double* y)
     {
       for (int jj = 0; jj < o.nc(); jj++)
         outFile << ii << " " << jj << " " << o(ii,jj) << "\n";
-      cout << "\n";
+      outFile << "\n";
     }
   }
   outFile.close();
