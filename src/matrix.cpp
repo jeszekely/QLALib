@@ -423,3 +423,19 @@ void printMatrix(matrixReal &o, string filename, double *x, double* y)
   }
   outFile.close();
 }
+
+void matrixComp::diagonalize(double* eigVals)
+{
+  assert (nrows == ncols);
+  int info;
+  int lwork = -1;
+  std::unique_ptr <double[]> rwork (new double [nrows*3+2]);
+  vector<cplx> wkopt (1,cplx(0.0));
+  zheev_("V", "U", nrows, data(), nrows, eigVals, wkopt.data(), lwork, rwork.get(), info);
+  lwork = int(real(wkopt[0]));
+  std::unique_ptr <cplx[]> work (new cplx [lwork]);
+  zheev_("V", "U", nrows, data(), nrows, eigVals, work.get(), lwork, rwork.get(), info);
+  if (info > 0)
+    throw std::runtime_error("Unable to diagonalize matrix");
+  return;
+}

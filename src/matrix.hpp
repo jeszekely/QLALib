@@ -302,6 +302,8 @@ public:
   {
     return getSub_impl<matrixComp>(ii,jj,kk,ll);
   }
+  void diagonalize(double* eigVals); ///< Full Diagonalization with dsyev
+
 };
 
 void printMatrix(matrixComp &o, std::string filename, double *x = nullptr, double *y = nullptr);
